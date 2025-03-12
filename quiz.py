@@ -34,7 +34,13 @@ questions[0].check(
 
 # Question 1
 # Create a patient series containing the date of each patient's earliest diabetes diagnosis.
-questions[1].check(...)
+questions[1].check(last_diagnosis_date = (
+    previous_events
+    .where(clinical_events.snomedct_code.is_in(diabetes_codes))
+    .sort_by(clinical_events.date)
+    .last_for_patient()
+    .date
+))
 # If you need a hint for this, or any other, question, just uncomment (remove the #) from the following line:
 # questions[1].hint()
 
